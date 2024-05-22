@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pettah AI 550 Jathaka Katha</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet" />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .loading-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+      }
+
+      .loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .welcome-text {
+        color: rgb(255, 255, 255);
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .welcome-small-text {
+        margin-top: 2rem;
+        font-size: 1rem;
+        color: rgb(255, 255, 255);
+        text-align: center;
+        margin-left: 12%;
+        margin-right: 12%;
+      }
+
+   .get-started-btn {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.get-started-btn:hover {
+  background-color: rgb(177, 177, 177);
+  color: rgb(0, 0, 0);
+}
+
+
+      .sidebar {
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.716);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        transition: left 0.5s ease;
+      }
+
+      .sidebar.visible {
+        left: 0;
+      }
+
+      .sidebar img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+      }
+
+      .sidebar h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: white;
+      }
+
+      .sidebar p {
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+      .sidebar-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: rgb(255, 255, 255);
+        color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      ul {
+        color: white;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .message-box {
+        position: fixed;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(255, 255, 255);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        display: none; /* Hide by default */
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loadingScreen" class="loading-screen">
+      <div class="welcome-text"> <br />
+            
+        <b>Pettah AI Wesak </b><br> AI Reviving Traditional Sri Lankan Folk Tales
+      </div> <br />
+            
+      <div class="get-started-btn" id="getStartedBtn">Get Started</div>
+      <div class="welcome-small-text">
+        <small> <br />
+        
+          In celebration of the cultural richness of Sri Lanka, our company,
+          Pettah AI, introduces a unique project merging technology with
+          tradition: "Pettah AI Wesak." This innovative endeavor aims to revive
+          and preserve the essence of Sri Lankan folk tales through the power of
+          artificial intelligence. Traditional Sri Lankan folk tales, or "පන්සිය
+          පනස් ජාතක කතා," are a treasure trove of wisdom, morality, and
+          entertainment deeply rooted in the island's heritage. However, with
+          the passage of time, many of these stories risk being forgotten or
+          fading into obscurity.
+        </small>
+        <footer>
+          <small>
+            
+            <br />
+            
+            2024 Pettah AI all rights reserved.
+          </small>
+      </div>
+    </div>
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-close-btn" id="sidebarCloseBtn">X</div>
+      <h2>Controls</h2>
+      <p>Use the arrow keys to navigate:</p>
+      <ul>
+        <li>← Walk Left</li>
+        <li>→ Walk Right</li>
+        <li>↑ Walk Forward</li>
+        <li>↓ Walk Backward</li>
+      </ul>
+      <img src="con.png" alt="Instruction Image" />
+      <ul><br><br><br><br><br><br><br><br><br>
+        <li><b>Pettah Ai </b><small><br>Design by seja menath</small></li>
+      </ul>
+    </div>
+    <div id="messageBox" class="message-box">
+      <span id="typingText"><b>Note - </b></span><span id="cursor">|</span>
+    </div>
+
+    <iframe
+      id="contentIframe"
+      src="https://pettah-ai-550jathaka-katha.onrender.com/"></iframe>
+    <script>
+      document
+        .getElementById("getStartedBtn")
+        .addEventListener("click", function () {
+          document.getElementById("loadingScreen").classList.add("hidden");
+          document.getElementById("sidebar").classList.add("visible");
+        });
+
+      document
+        .getElementById("sidebarCloseBtn")
+        .addEventListener("click", function () {
+          document.getElementById("sidebar").classList.remove("visible");
+        });
+
+      // Hide the message box initially
+      document.getElementById("messageBox").style.display = "none";
+
+      // Show the message box 2 minutes after HTML content has loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          document.getElementById("messageBox").style.display = "block";
+
+          // Hide the message box after 5 seconds
+          setTimeout(function () {
+            document.getElementById("messageBox").style.display = "none";
+          }, 14000);
+        }, 12000); // 2 minutes delay
+      });
+      // Typing animation function
+      function typeWriter(text, i, interval, typingElement) {
+        if (i < text.length) {
+          typingElement.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(function () {
+            typeWriter(text, i, interval, typingElement);
+          }, interval);
+        }
+      }
+
+      // Start typing animation when the document is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        var messageBox = document.getElementById("messageBox");
+        var typingText = document.getElementById("typingText");
+
+        var text =
+          " This project is currently in demo mode. The full version is coming soon. Please wait for further updates.";
+        var interval = 200; // Interval between each character typing in milliseconds
+
+        // Hide cursor initially
+        document.getElementById("cursor").style.display = "none";
+
+        // Start typing animation
+        typeWriter(text, 0, interval, typingText);
+
+        // Show cursor after typing animation completes
+        setTimeout(function () {
+          document.getElementById("cursor").style.display = "inline";
+        }, text.length * interval);
+      });
+    </script>
+  </body>
+</html>
