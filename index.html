@@ -1,268 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pettah AI Wesak</title>
-  <!-- Meta Tags -->
-    <meta name="description" content="Explore an immersive 3D virtual showroom presenting 550 Jathaka Katha stories powered by AI images.">
-    <meta name="keywords" content="Pettah AI Wesak, 3D virtual showcase, Jathaka Katha, AI image showroom, Buddhist folklore, AI storytelling, immersive experience, virtual reality, AI-generated images, cultural heritage, digital exhibition, religious narratives">
-    <meta name="author" content="Your Name or Organization">
-    <meta name="robots" content="index, follow">
-    <meta name="revisit-after" content="7 days">
-    <!-- Social Meta Tags -->
-    <meta property="og:title" content="Pettah AI Wesak Project: 3D Virtual Showcase of 550 Jathaka Katha Stories">
-    <meta property="og:description" content="Explore an immersive 3D virtual showroom presenting 550 Jathaka Katha stories powered by AI images.">
-    <meta property="og:image" content="banner.jpg">
-    <meta property="og:url" content="www.pettahai.com">
-    <meta name="twitter:card" content="banner.jpg">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <style>
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pettah AI 550 Jathaka Katha</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet" />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
 
-    .loading-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    }
+      .loading-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
 
-    .loading-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
+      .loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
 
-    .welcome-text {
-      color: rgb(255, 255, 255);
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+      .welcome-text {
+        color: rgb(255, 255, 255);
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
 
-    .welcome-small-text {
-      margin-top: 2rem;
-      font-size: 1rem;
-      color: rgb(255, 255, 255);
-      text-align: center;
-      margin-left: 12%;
-      margin-right: 12%;
-    }
+      .welcome-small-text {
+        margin-top: 2rem;
+        font-size: 1rem;
+        color: rgb(255, 255, 255);
+        text-align: center;
+        margin-left: 12%;
+        margin-right: 12%;
+      }
 
-    .get-started-btn {
-      background-color: rgb(255, 255, 255);
-      color: rgb(0, 0, 0);
-      padding: 1rem 2rem;
-      border-radius: 30px;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: background-color 0.3s, color 0.3s;
-    }
+      .get-started-btn {
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: background-color 0.3s, color 0.3s;
+        text-align: center;
+      }
 
-    .get-started-btn:hover {
-      background-color: rgb(177, 177, 177);
-      color: rgb(0, 0, 0);
-    }
+      .get-started-btn:hover {
+        background-color: rgb(177, 177, 177);
+        color: rgb(0, 0, 0);
+      }
 
-    .sidebar {
-      position: absolute;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.716);
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      transition: left 0.5s ease;
-    }
+      .sidebar {
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.716);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        transition: left 0.5s ease;
+      }
 
-    .sidebar.visible {
-      left: 0;
-    }
+      .sidebar.visible {
+        left: 0;
+      }
 
-    .sidebar img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 1rem;
-    }
+      .sidebar img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+      }
 
-    .sidebar h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: white;
-    }
+      .sidebar h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: white;
+      }
 
-    .sidebar p {
-      margin-bottom: 1rem;
-      color: white;
-    }
+      .sidebar p {
+        margin-bottom: 1rem;
+        color: white;
+      }
 
-    .sidebar-close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 30px;
-      height: 30px;
-      background-color: rgb(255, 255, 255);
-      color: #000000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 50%;
-    }
+      .sidebar-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: rgb(255, 255, 255);
+        color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 50%;
+      }
 
-    ul {
-      color: white;
-    }
+      ul {
+        color: white;
+      }
 
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
 
-    .message-box {
-      position: fixed;
-      top: 90%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0);
-      color: rgb(255, 255, 255);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      display: none; /* Hide by default */
-      text-align: center;
-    }
+      .message-box {
+        position: fixed;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(255, 255, 255);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        display: none; /* Hide by default */
+        text-align: center;
+      }
 
-    audio {
-      width: 95%;
-      border: none;
-    }
-    #backgroundAudio{
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div id="loadingScreen" class="loading-screen">
-    <div class="welcome-text"><br />
-      <b>Pettah AI Wesak </b><br> AI Reviving Traditional Sri Lankan Folk Tales
-    </div><br />
-    <div class="get-started-btn" id="getStartedBtn">Get Started</div>
-    <div class="welcome-small-text">
-      <small><br />
-        In celebration of the cultural richness of Sri Lanka, our company,
-        Pettah AI, introduces a unique project merging technology with
-        tradition: "Pettah AI Wesak." This innovative endeavor aims to revive
-        and preserve the essence of Sri Lankan folk tales through the power of
-        artificial intelligence. Traditional Sri Lankan folk tales, or "පන්සිය
-        පනස් ජාතක කතා," are a treasure trove of wisdom, morality, and
-        entertainment deeply rooted in the island's heritage. However, with
-        the passage of time, many of these stories risk being forgotten or
-        fading into obscurity.
-      </small>
-      <footer>
-        <small><br />
-          2024 Pettah AI all rights reserved.
+      audio {
+        width: 95%;
+        border: none;
+      }
+
+      #backgroundAudio {
+        display: none;
+      }
+
+      /* Media Queries for Mobile View */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100%;
+          left: -100%;
+        }
+        #messageBox {
+          top: 90%;
+          background-color: rgba(0, 0, 0, 0);
+          color: rgb(255, 255, 255);
+          display: none; /* Hide by default */
+        }
+
+        .sidebar.visible {
+          left: 0;
+        }
+
+        .sidebar-close-btn {
+          top: 15px;
+          right: 15px;
+        }
+
+        .desktop-controls {
+          display: none;
+        }
+
+        .mobile-controls {
+          display: block;
+        }
+
+        .welcome-text {
+          font-size: 1.8rem;
+        }
+
+        .welcome-small-text {
+          font-size: 0.9rem;
+          margin-left: 8%;
+          margin-right: 8%;
+        }
+
+        .get-started-btn {
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+        }
+
+        .message-box {
+          top: 85%;
+        }
+      }
+
+      /* Default: show desktop controls and hide mobile controls */
+      .mobile-controls {
+        margin-top: 10%;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      #cursor {
+        animation: blink 1s step-start infinite;
+      }
+      .copyw {
+        margin-top: 60%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loadingScreen" class="loading-screen">
+      <div class="welcome-text">
+        <b>Pettah AI Wesak</b><br />
+        AI Reviving Traditional Sri Lankan Folk Tales
+      </div>
+      <div class="get-started-btn" id="getStartedBtn">Get Started</div>
+      <div class="welcome-small-text">
+        <small>
+          In celebration of the cultural richness of Sri Lanka, our company,
+          Pettah AI, introduces a unique project merging technology with
+          tradition: "Pettah AI Wesak." This innovative endeavor aims to revive
+          and preserve the essence of Sri Lankan folk tales through the power of
+          artificial intelligence. Traditional Sri Lankan folk tales, or "පන්සිය
+          පනස් ජාතක කතා," are a treasure trove of wisdom, morality, and
+          entertainment deeply rooted in the island's heritage. However, with
+          the passage of time, many of these stories risk being forgotten or
+          fading into obscurity.
+
+          <br /><br />This project will bring the "පන්සිය පනස් ජාතක කතා" to life
+          one by one, using AI-generated images to visualize each tale.
+          Currently, the project is in its demo phase and has generated 30
+          pictures. Updates are coming soon, with more stories and images to be
+          added. Stay tuned for further developments as we continue to celebrate
+          and preserve the rich cultural heritage of Sri Lanka with Pettah AI
+          Wesak.
         </small>
+        <footer>
+          <br /><br /><br />
+          <small> 2024 Pettah AI all rights reserved. </small>
+        </footer>
       </div>
     </div>
-  </div>
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-close-btn" id="sidebarCloseBtn">X</div>
-    <h2>Controls</h2>
-    <p>Use the arrow keys to navigate:</p>
-    <ul>
-      <li>← Walk Left</li>
-      <li>→ Walk Right</li>
-      <li>↑ Walk Forward</li>
-      <li>↓ Walk Backward</li>
-    </ul>
-    <img src="con.png" alt="Instruction Image" />
-    <ul><br><br><br><br><br>
-      <audio controls autoplay id="backgroundAudio">
-        <source src="song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-      <br><br><br><br>
-      <li><b>Pettah Ai </b><small><br>Design by seja menath</small></li>
-    </ul>
-  </div>
-  <div id="messageBox" class="message-box">
-    <span id="typingText"><b>Note - </b></span><span id="cursor">|</span>
-  </div>
-  <iframe id="contentIframe" src="https://pettah-ai-550jathaka-katha.onrender.com/"></iframe>
-  <script>
-    document.getElementById("getStartedBtn").addEventListener("click", function () {
-      document.getElementById("loadingScreen").classList.add("hidden");
-      document.getElementById("sidebar").classList.add("visible");
-      document.getElementById("backgroundAudio").play(); // Play the audio when the button is clicked
-    });
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-close-btn" id="sidebarCloseBtn">X</div>
+      <h2 class="desktop-controls">Controls</h2>
+      <p class="desktop-controls">Use the arrow keys to navigate:</p>
+      <ul class="desktop-controls">
+        <li>← Walk Left</li>
+        <li>→ Walk Right</li>
+        <li>↑ Walk Forward</li>
+        <li>↓ Walk Backward</li>
+        <br />
+        <li><b>DESKTOP </b></li>
+      </ul>
+      <img src="con.png" alt="Instruction Image" class="desktop-controls" />
 
-    document.getElementById("sidebarCloseBtn").addEventListener("click", function () {
-      document.getElementById("sidebar").classList.remove("visible");
-    });
+      <div class="mobile-controls">
+        <h2>Touch Controls</h2>
+        <p>Tap on the screen to navigate:</p>
+        <ul>
+          <li>👈 Walk Left</li>
+          <li>👉 Walk Right</li>
+          <li>👆 Walk Forward</li>
+          <li>👇 Walk Backward</li>
+          <br />
+          <img src="con2.png" alt="Instruction Image" class="mobile-controls" />
+          <li><b>MOBILE</b></li>
+        </ul>
+      </div>
 
-    // Hide the message box initially
-    document.getElementById("messageBox").style.display = "none";
+      <ul>
+        <audio controls autoplay id="backgroundAudio">
+          <source src="song.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        <li class="copyw">
+          <b>Pettah Ai</b><br />
+          <small>Design by seja menath</small>
+        </li>
+      </ul>
+    </div>
+    <div id="messageBox" class="message-box">
+      <span id="typingText"><b>Note - </b></span><span id="cursor">|</span>
+    </div>
+    <iframe
+      id="contentIframe"
+      src="https://pettah-ai-550jathaka-katha.onrender.com/"></iframe>
+    <script>
+      document
+        .getElementById("getStartedBtn")
+        .addEventListener("click", function () {
+          document.getElementById("loadingScreen").classList.add("hidden");
+          document.getElementById("sidebar").classList.add("visible");
+          document.getElementById("backgroundAudio").play(); // Play the audio when the button is clicked
+        });
 
-    // Show the message box 2 minutes after HTML content has loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(function () {
-        document.getElementById("messageBox").style.display = "block";
+      document
+        .getElementById("sidebarCloseBtn")
+        .addEventListener("click", function () {
+          document.getElementById("sidebar").classList.remove("visible");
+        });
 
-        // Hide the message box after 5 seconds
+      // Hide the message box initially
+      document.getElementById("messageBox").style.display = "none";
+
+      // Show the message box 2 minutes after HTML content has loaded
+      document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
-          document.getElementById("messageBox").style.display = "none";
-        }, 14000);
-      }, 12000); // 2 minutes delay
-    });
+          document.getElementById("messageBox").style.display = "block";
 
-    // Typing animation function
-    function typeWriter(text, i, interval, typingElement) {
-      if (i < text.length) {
-        typingElement.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(function () {
-          typeWriter(text, i, interval, typingElement);
-        }, interval);
+          // Hide the message box after 5 seconds
+          setTimeout(function () {
+            document.getElementById("messageBox").style.display = "none";
+          }, 19000);
+        }, 12000); // 2 minutes delay
+      });
+
+      // Typing animation function
+      function typeWriter(text, i, interval, typingElement) {
+        if (i < text.length) {
+          typingElement.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(function () {
+            typeWriter(text, i, interval, typingElement);
+          }, interval);
+        }
       }
-    }
 
-    // Start typing animation when the document is loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      var messageBox = document.getElementById("messageBox");
-      var typingText = document.getElementById("typingText");
+      // Start typing animation when the document is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        var typingText = document.getElementById("typingText");
+        var text =
+          " This project is currently in demo mode. The full version is coming soon. Please wait for further updates.";
+        var interval = 200; // Interval between each character typing in milliseconds
 
-      var text =
-        " This project is currently in demo mode. The full version is coming soon. Please wait for further updates.";
-      var interval = 200; // Interval between each character typing in milliseconds
+        // Hide cursor initially
+        document.getElementById("cursor").style.display = "none";
 
-      // Hide cursor initially
-      document.getElementById("cursor").style.display = "none";
+        // Start typing animation
+        typeWriter(text, 0, interval, typingText);
 
-      // Start typing animation
-      typeWriter(text, 0, interval, typingText);
+        // Show cursor after typing animation completes
+        setTimeout(function () {
+          document.getElementById("cursor").style.display = "inline";
+        }, text.length * interval);
+      });
 
-      // Show cursor after typing animation completes
-      setTimeout(function () {
-        document.getElementById("cursor").style.display = "inline";
-      }, text.length * interval);
-    });
-  </script>
-</body>
+      // Function to navigate to different sections
+      function navigateToSection(section) {
+        // Implement your navigation logic here, e.g., load a different page or change the iframe source
+        alert("Navigate to " + section);
+      }
+    </script>
+  </body>
 </html>
